@@ -1,14 +1,30 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Modelo de um determinado veículo
  * @author Ruan
  */
+@Entity
+@Table(name = "tbmodelo")
 public class Modelo extends Model {
     
-    private int    ano;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "modcodigo")
     private int    codigo;
+    @Column(name = "modano")
+    private int    ano;
+    @ManyToOne
     private Marca  marca;
+    @Column(name = "modnome")
     private String nome;
 
     public Modelo() {

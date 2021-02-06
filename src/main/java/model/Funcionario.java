@@ -1,15 +1,24 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
 /**
  * Modelo de funcionário
  * @author Ruan
  */
+@Entity
 public class Funcionario extends Pessoa {
     
+    @Column(name = "pesdataadmissao")
     private String  dataAdmissao;
+    @Column(name = "pesgerente")
     private boolean gerente;
+    @Column(name = "pessalario")
     private float   salario;
+    @Column(name = "peslogin")
     private String  login;
+    @Column(name = "pessenha")
     private String  senha;
 
     public Funcionario() {

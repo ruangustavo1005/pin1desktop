@@ -1,12 +1,18 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
 /**
  * Modelo de um cliente
  * @author Ruan
  */
+@Entity
 public class Cliente extends Pessoa {
     
+    @Column(name = "pesemail")
     private String email;
+    @Column(name = "pestelefone")
     private String telefone;
 
     public Cliente() {

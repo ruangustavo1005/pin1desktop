@@ -1,14 +1,32 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 /**
  * Modelo de determinada pessoa
  * @author Ruan
  */
+@Entity
+@Table(name = "tbpessoa")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 abstract public class Pessoa extends Model {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "pescodigo")
     private int    codigo;
+    @Column(name = "pescpf")
     private int    cpf;
+    @Column(name = "pesdatanascimento")
     private String dataNascimento;
+    @Column(name = "pesnome")
     private String nome;
 
     public Pessoa() {

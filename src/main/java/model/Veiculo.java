@@ -1,22 +1,37 @@
 package model;
 
-import util.NumberUtils;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * Modelo de um veículo vrum vrum
  * @author Ruan
  */
+@Entity
+@Table(name = "tbveiculo")
 public class Veiculo extends Model {
     
-    private int    anoFabricacao;
-    private String cor;
-    private Modelo modelo;
-    private String observacao;
+    @Id
+    @Column(name = "veiplaca")
     private String placa;
+    @Column(name = "veianofabricacao")
+    private int    anoFabricacao;
+    @Column(name = "veicor")
+    private String cor;
+    @ManyToOne
+    private Modelo modelo;
+    @Column(name = "veiobservacao")
+    private String observacao;
+    @Column(name = "veipreco")
     private float  preco;
+    @Column(name = "veiquilometragem")
     private int    quilometragem;
 
     public Veiculo() {
+        
     }
 
     public Veiculo(int anoFabricacao, String cor, Modelo modelo, String observacao, String placa, float preco, int quilometragem) {

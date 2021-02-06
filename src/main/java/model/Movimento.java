@@ -1,14 +1,29 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Modelo de um movimento financeiro (entrada/saída de dinheiro)
  * @author Ruan
  */
+@Entity
+@Table(name = "tbmovimento")
 public class Movimento extends Model {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movcodigo")
     private int    codigo;
+    @Column(name = "movdatahora")
     private String dataHora;
+    @Column(name = "movdescricao")
     private String descricao;
+    @Column(name = "movvalor")
     private float  valor;
 
     public Movimento() {

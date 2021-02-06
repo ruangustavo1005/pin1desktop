@@ -1,16 +1,36 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Modelo de um agendamento efetuado pelo site
  * @author Ruan
  */
+@Entity
+@Table(name = "tbagendamento")
 public class Agendamento extends Model {
     
-    private Cliente     cliente;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "agecodigo")
     private int         codigo;
+    @ManyToOne
+    @Column(name = "pescodigocliente")
+    private Cliente     cliente;
+    @Column(name = "agedatahora")
     private String      dataHora;
+    @ManyToOne
+    @Column(name = "pescodigofuncionario")
     private Funcionario funcionario;
+    @Column(name = "agesituacao")
     private int         situacao;
+    @ManyToOne
     private Veiculo     veiculo;
 
     public Agendamento() {
