@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -21,16 +22,17 @@ public class Agendamento extends Model {
     @Column(name = "agecodigo")
     private int         codigo;
     @ManyToOne
-    @Column(name = "pescodigocliente")
+    @JoinColumn(name = "pescodigocliente")
     private Cliente     cliente;
     @Column(name = "agedatahora")
     private String      dataHora;
     @ManyToOne
-    @Column(name = "pescodigofuncionario")
+    @JoinColumn(name = "pescodigofuncionario")
     private Funcionario funcionario;
     @Column(name = "agesituacao")
     private int         situacao;
     @ManyToOne
+    @JoinColumn(name = "veiplaca")
     private Veiculo     veiculo;
 
     public Agendamento() {

@@ -3,6 +3,7 @@ package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -22,6 +23,7 @@ public class Veiculo extends Model {
     @Column(name = "veicor")
     private String cor;
     @ManyToOne
+    @JoinColumn(name = "modcodigo")
     private Modelo modelo;
     @Column(name = "veiobservacao")
     private String observacao;

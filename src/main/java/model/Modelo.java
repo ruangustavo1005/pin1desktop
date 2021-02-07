@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,6 +24,7 @@ public class Modelo extends Model {
     @Column(name = "modano")
     private int    ano;
     @ManyToOne
+    @JoinColumn(name = "marcodigo")
     private Marca  marca;
     @Column(name = "modnome")
     private String nome;

@@ -1,30 +1,39 @@
 package controller;
 
+import model.Model;
+import view.View;
+
 /**
  * Controlador base para os outros diversos
  * @author Ruan
- * @param <TypeModel>      Tipo do modelo
- * @param <TypeView>       Tipo da tela
  */
-abstract public class Controller<TypeModel, TypeView> {
+abstract public class Controller {
     
-    protected TypeModel model;
-    protected TypeView  view;
-    
-    /**
-     * Método que irá criar e setar tudo o que é necessário na View e deixá-la visível
-     */
-    abstract public void montaTela();
+    protected Model model;
+    protected View  view;
 
-    public TypeModel getModel() {
+    public Controller() {
+        this.model = this.getInstanceModel();
+        this.view  = this.getInstanceView();
+    }
+
+    abstract public Model getInstanceModel();
+    
+    abstract public View getInstanceView();
+    
+    public void montaTela() {
+        this.getView().setVisible(true);
+    }
+
+    public Model getModel() {
         return model;
     }
 
-    public void setModel(TypeModel model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
-    public TypeView getView() {
+    public View getView() {
         return view;
     }
 
