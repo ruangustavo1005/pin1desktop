@@ -28,7 +28,6 @@ public class ViewIndex extends ViewConsulta {
         menuMarcas = new javax.swing.JMenuItem();
         menuModelos = new javax.swing.JMenuItem();
         menuVeiculos = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Fusuan Motors Internal System");
@@ -48,9 +47,6 @@ public class ViewIndex extends ViewConsulta {
         jMenu1.add(menuVeiculos);
 
         jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -99,7 +95,6 @@ public class ViewIndex extends ViewConsulta {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem menuMarcas;
