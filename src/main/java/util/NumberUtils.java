@@ -7,7 +7,7 @@ package util;
 public class NumberUtils {
     
     public static int parseInt(String s) {
-        String replace = s.trim();
+        String replace = s.replace(".", "").trim();
         return replace.equals("") ? 0 : Integer.parseInt(replace);
     }
     

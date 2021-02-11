@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class MD5 {
 
-    public static String md5(String text) {
+    static public String md5(String text) {
         String retorno = "";
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
@@ -21,6 +21,10 @@ public class MD5 {
             System.out.println(e.getMessage());
         }
         return retorno;
+    }
+    
+    static public String md5(char[] chars) {
+        return md5(new String(chars));
     }
     
 }

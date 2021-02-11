@@ -110,5 +110,10 @@ public class Venda extends Model {
     public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
     }
+
+    @Override
+    public boolean isChavePreenchida() {
+        return this.getCodigo() != 0;
+    }
     
 }

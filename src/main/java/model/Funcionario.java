@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -11,7 +12,7 @@ import javax.persistence.Entity;
 public class Funcionario extends Pessoa {
     
     @Column(name = "pesdataadmissao")
-    private String  dataAdmissao;
+    private Date    dataAdmissao;
     @Column(name = "pesgerente")
     private boolean gerente;
     @Column(name = "pessalario")
@@ -25,7 +26,7 @@ public class Funcionario extends Pessoa {
         super();
     }
 
-    public Funcionario(String dataAdmissao, boolean gerente, float salario, String login, String senha, int codigo, int cpf, String dataNascimento, String nome) {
+    public Funcionario(Date dataAdmissao, boolean gerente, float salario, String login, String senha, int codigo, String cpf, Date dataNascimento, String nome) {
         super(codigo, cpf, dataNascimento, nome);
         this.dataAdmissao = dataAdmissao;
         this.gerente = gerente;
@@ -34,11 +35,11 @@ public class Funcionario extends Pessoa {
         this.senha = senha;
     }
 
-    public String getDataAdmissao() {
+    public Date getDataAdmissao() {
         return dataAdmissao;
     }
 
-    public void setDataAdmissao(String dataAdmissao) {
+    public void setDataAdmissao(Date dataAdmissao) {
         this.dataAdmissao = dataAdmissao;
     }
 

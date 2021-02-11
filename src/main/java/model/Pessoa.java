@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,9 +24,9 @@ abstract public class Pessoa extends Model {
     @Column(name = "pescodigo")
     private int    codigo;
     @Column(name = "pescpf")
-    private int    cpf;
+    private String cpf;
     @Column(name = "pesdatanascimento")
-    private String dataNascimento;
+    private Date   dataNascimento;
     @Column(name = "pesnome")
     private String nome;
 
@@ -33,7 +34,7 @@ abstract public class Pessoa extends Model {
         
     }
     
-    public Pessoa(int codigo, int cpf, String dataNascimento, String nome) {
+    public Pessoa(int codigo, String cpf, Date dataNascimento, String nome) {
         this.codigo         = codigo;
         this.cpf            = cpf;
         this.dataNascimento = dataNascimento;
@@ -48,19 +49,19 @@ abstract public class Pessoa extends Model {
         this.codigo = codigo;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
-    public String getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
@@ -70,6 +71,11 @@ abstract public class Pessoa extends Model {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public boolean isChavePreenchida() {
+        return this.getCodigo() != 0;
     }
     
 }

@@ -1,6 +1,6 @@
 package pin.pin1desktop;
 
-import controller.ControllerTesteImagem;
+import controller.ControllerLogin;
 
 /**
  * Classe main do sistema
@@ -10,7 +10,7 @@ import controller.ControllerTesteImagem;
 public class App {
     
     public static void main(String[] args) {
-        (new ControllerTesteImagem()).montaTela();
+        (new ControllerLogin(null)).montaTela();
     }
     
 }

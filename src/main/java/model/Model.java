@@ -8,4 +8,6 @@ import java.io.Serializable;
  */
 abstract public class Model implements Serializable {
     
+    abstract public boolean isChavePreenchida();
+    
 }

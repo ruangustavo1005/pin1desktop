@@ -1,5 +1,6 @@
 package controller;
 
+import dao.Dao;
 import model.Model;
 import view.View;
 
@@ -9,17 +10,25 @@ import view.View;
  */
 abstract public class Controller {
     
-    protected Model model;
-    protected View  view;
+    protected Controller caller;
+    protected Model      model;
+    protected View       view;
+    protected Dao        dao;
 
-    public Controller() {
-        this.model = this.getInstanceModel();
-        this.view  = this.getInstanceView();
+    public Controller(Controller caller) {
+        this.caller = caller;
+        this.model  = this.getInstanceModel();
+        this.view   = this.getInstanceView();
+        this.dao    = this.getInstanceDao();
     }
 
+    abstract public boolean processaDados();
+    
     abstract public Model getInstanceModel();
     
     abstract public View getInstanceView();
+    
+    abstract public Dao getInstanceDao();
     
     public void montaTela() {
         this.getView().setVisible(true);
@@ -35,6 +44,14 @@ abstract public class Controller {
 
     public View getView() {
         return view;
+    }
+
+    public Dao getDao() {
+        return dao;
+    }
+
+    public Controller getCaller() {
+        return caller;
     }
 
 }

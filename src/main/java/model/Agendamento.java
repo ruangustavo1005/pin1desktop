@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class Agendamento extends Model {
     @JoinColumn(name = "pescodigocliente")
     private Cliente     cliente;
     @Column(name = "agedatahora")
-    private String      dataHora;
+    private Date        dataHora;
     @ManyToOne
     @JoinColumn(name = "pescodigofuncionario")
     private Funcionario funcionario;
@@ -41,7 +42,7 @@ public class Agendamento extends Model {
         this.veiculo     = new Veiculo();
     }
 
-    public Agendamento(Cliente cliente, int codigo, String dataHora, Funcionario funcionario, int situacao, Veiculo veiculo) {
+    public Agendamento(Cliente cliente, int codigo, Date dataHora, Funcionario funcionario, int situacao, Veiculo veiculo) {
         this.cliente     = cliente;
         this.codigo      = codigo;
         this.dataHora    = dataHora;
@@ -66,11 +67,11 @@ public class Agendamento extends Model {
         this.codigo = codigo;
     }
 
-    public String getDataHora() {
+    public Date getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(String dataHora) {
+    public void setDataHora(Date dataHora) {
         this.dataHora = dataHora;
     }
 
@@ -96,6 +97,11 @@ public class Agendamento extends Model {
 
     public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
+    }
+
+    @Override
+    public boolean isChavePreenchida() {
+        return this.getCodigo() != 0;
     }
 
 }

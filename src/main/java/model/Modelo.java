@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Comparator;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tbmodelo")
-public class Modelo extends Model {
+public class Modelo extends Model implements Comparator<Modelo> {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,6 +71,21 @@ public class Modelo extends Model {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public String toString() {
+        return marca.getNome() + " " + nome + " " + ano;
+    }
+
+    @Override
+    public boolean isChavePreenchida() {
+        return this.getCodigo() != 0;
+    }
+
+    @Override
+    public int compare(Modelo modelo1, Modelo modelo2) {
+        return modelo1.getCodigo() - modelo2.getCodigo();
     }
 
 }

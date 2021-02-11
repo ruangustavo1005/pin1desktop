@@ -1,5 +1,9 @@
 package model;
 
+import interfaces.ListagemParcial;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tbfotoveiculo")
-public class ImagemCarro extends Model {
+public class ImagemCarro extends Model implements Comparator<ImagemCarro>, ListagemParcial {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,5 +64,22 @@ public class ImagemCarro extends Model {
     public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
     }
-   
+
+    @Override
+    public boolean isChavePreenchida() {
+        return this.getCodigo() != 0;
+    }
+
+    @Override
+    public int compare(ImagemCarro imagemCarro1, ImagemCarro imagemCarro2) {
+        return imagemCarro1.getCodigo() - imagemCarro2.getCodigo();
+    }
+
+    @Override
+    public List<String> getCamposIgnorar() {
+        ArrayList<String> campos = new ArrayList<>();
+        campos.add("conteudo");
+        return campos;
+    }
+    
 }

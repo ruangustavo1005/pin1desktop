@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public class Movimento extends Model {
     @Column(name = "movcodigo")
     private int    codigo;
     @Column(name = "movdatahora")
-    private String dataHora;
+    private Date   dataHora;
     @Column(name = "movdescricao")
     private String descricao;
     @Column(name = "movvalor")
@@ -30,7 +31,7 @@ public class Movimento extends Model {
         
     }
 
-    public Movimento(int codigo, String dataHora, String descricao, float valor) {
+    public Movimento(int codigo, Date dataHora, String descricao, float valor) {
         this.codigo = codigo;
         this.dataHora = dataHora;
         this.descricao = descricao;
@@ -45,11 +46,11 @@ public class Movimento extends Model {
         this.codigo = codigo;
     }
 
-    public String getDataHora() {
+    public Date getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(String dataHora) {
+    public void setDataHora(Date dataHora) {
         this.dataHora = dataHora;
     }
 
@@ -67,6 +68,11 @@ public class Movimento extends Model {
 
     public void setValor(float valor) {
         this.valor = valor;
+    }
+
+    @Override
+    public boolean isChavePreenchida() {
+        return this.getCodigo() != 0;
     }
     
 }

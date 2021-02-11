@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -19,7 +20,7 @@ public class Cliente extends Pessoa {
         super();
     }
 
-    public Cliente(String email, String telefone, int codigo, int cpf, String dataNascimento, String nome) {
+    public Cliente(String email, String telefone, int codigo, String cpf, Date dataNascimento, String nome) {
         super(codigo, cpf, dataNascimento, nome);
         this.email = email;
         this.telefone = telefone;
