@@ -33,12 +33,17 @@ public class ControllerManutencaoVeiculo extends ControllerManutencao {
     @Override
     public void montaTela() {
         super.montaTela();
-        (new Dao(Modelo.class)).get().forEach((Modelo) -> {
-            this.getView().getComboBoxModelo().addItem((Modelo) Modelo);
-        });
         this.addListenerAcoes();
     }
 
+    @Override
+    protected void beanDadosTela() {
+        (new Dao(Modelo.class)).get().forEach((Modelo) -> {
+            this.getView().getComboBoxModelo().addItem((Modelo) Modelo);
+        });
+        super.beanDadosTela();
+    }
+    
     @Override
     public Veiculo getInstanceModel() {
         return new Veiculo();

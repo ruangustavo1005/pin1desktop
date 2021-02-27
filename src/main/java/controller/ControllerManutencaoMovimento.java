@@ -1,29 +1,23 @@
 package controller;
 
 import dao.Dao;
-import model.Marca;
-import model.Modelo;
-import view.ViewManutencaoModelo;
+import dao.DaoMovimento;
+import model.Movimento;
+import view.ViewManutencaoMovimento;
 
 /**
  * @author Ruan
  */
-public class ControllerManutencaoModelo extends ControllerManutencao {
+public class ControllerManutencaoMovimento extends ControllerManutencao {
 
-    public ControllerManutencaoModelo(Controller caller) {
+    public ControllerManutencaoMovimento(Controller caller) {
         super(caller);
     }
 
     @Override
     public boolean processaDados() {
-        boolean retorno;
         this.setModel(this.getView().getModelFromDadosTela());
-        if (this.getModel().isChavePreenchida()) {
-            retorno = this.getDao().update(this.getModel());
-        }
-        else {
-            retorno = this.getDao().add(this.getModel());
-        }
+        boolean retorno = this.getDao().add(this.getModel());
         if (retorno) {
             ((ControllerConsulta) this.getCaller()).atualizaConsulta(this.getModel());
         }
@@ -37,36 +31,28 @@ public class ControllerManutencaoModelo extends ControllerManutencao {
     }
 
     @Override
-    protected void beanDadosTela() {
-        (new Dao(Marca.class)).get().forEach((marca) -> {
-            this.getView().getComboBoxMarca().addItem((Marca) marca);
-        });
-        super.beanDadosTela();
+    public Movimento getInstanceModel() {
+        return new Movimento();
     }
 
     @Override
-    public Modelo getInstanceModel() {
-        return new Modelo();
+    public ViewManutencaoMovimento getInstanceView() {
+        return new ViewManutencaoMovimento();
     }
 
     @Override
-    public ViewManutencaoModelo getInstanceView() {
-        return new ViewManutencaoModelo();
+    public DaoMovimento getInstanceDao() {
+        return new DaoMovimento();
     }
 
     @Override
-    public Dao getInstanceDao() {
-        return new Dao(Modelo.class);
+    public Movimento getModel() {
+        return (Movimento) super.getModel();
     }
 
     @Override
-    public Modelo getModel() {
-        return (Modelo) super.getModel();
-    }
-
-    @Override
-    public ViewManutencaoModelo getView() {
-        return (ViewManutencaoModelo) super.getView();
+    public ViewManutencaoMovimento getView() {
+        return (ViewManutencaoMovimento) super.getView();
     }
     
     private void addListenerAcoes() {

@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,9 +26,7 @@ public class Venda extends Model {
     @JoinColumn(name = "pescodigocliente")
     private Cliente     cliente;
     @Column(name = "vendata")
-    private String      dataVenda;
-    @Column(name = "vendesconto")
-    private float       desconto;
+    private Date        dataVenda;
     @ManyToOne
     @JoinColumn(name = "pescodigofuncionario")
     private Funcionario funcionario;
@@ -45,11 +44,10 @@ public class Venda extends Model {
         this.veiculo     = new Veiculo();
     }
 
-    public Venda(Cliente cliente, int codigo, String dataVenda, float desconto, Funcionario funcionario, Movimento movimento, Veiculo veiculo) {
+    public Venda(Cliente cliente, int codigo, Date dataVenda, Funcionario funcionario, Movimento movimento, Veiculo veiculo) {
         this.cliente = cliente;
         this.codigo = codigo;
         this.dataVenda = dataVenda;
-        this.desconto = desconto;
         this.funcionario = funcionario;
         this.movimento = movimento;
         this.veiculo = veiculo;
@@ -71,20 +69,12 @@ public class Venda extends Model {
         this.codigo = codigo;
     }
 
-    public String getDataVenda() {
+    public Date getDataVenda() {
         return dataVenda;
     }
 
-    public void setDataVenda(String dataVenda) {
+    public void setDataVenda(Date dataVenda) {
         this.dataVenda = dataVenda;
-    }
-
-    public float getDesconto() {
-        return desconto;
-    }
-
-    public void setDesconto(float desconto) {
-        this.desconto = desconto;
     }
 
     public Funcionario getFuncionario() {

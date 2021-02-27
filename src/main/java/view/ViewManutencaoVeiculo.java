@@ -5,6 +5,7 @@ import javax.swing.JComboBox;
 import model.Modelo;
 import model.Veiculo;
 import util.NumberUtils;
+import util.StringUtils;
 
 /**
  *
@@ -183,8 +184,8 @@ public class ViewManutencaoVeiculo extends ViewManutencao {
         this.comboBoxModelo.setSelectedItem(this.getModel().getModelo());
         this.campoObservacao.setText(this.getModel().getObservacao());
         this.campoPlaca.setText(this.getModel().getPlaca());
-        this.campoValor.setText(NumberUtils.formataValor(this.getModel().getPreco()));
-        this.campoQuilometragem.setText(NumberUtils.formataValor(this.getModel().getQuilometragem(), 0));
+        this.campoValor.setText(StringUtils.lpad(NumberUtils.formataValor(this.getModel().getPreco(), 2, true), 10));
+        this.campoQuilometragem.setText(StringUtils.lpad(NumberUtils.formataValor(this.getModel().getQuilometragem(), 0, true), 7));
         if (this.getModel().isChavePreenchida()) {
             this.campoPlaca.setEnabled(false);
         }

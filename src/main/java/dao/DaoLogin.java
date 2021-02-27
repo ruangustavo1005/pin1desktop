@@ -13,11 +13,16 @@ public class DaoLogin extends Dao<Funcionario> {
         super(Funcionario.class);
     }
     
-    public boolean dadosLoginCorretos(Funcionario funcionario) {
-        Query query = em.createQuery("select 1 from Funcionario funcionario where funcionario.login = :login and funcionario.senha = :senha");
+    public int dadosLoginCorretos(Funcionario funcionario) {
+        Query query = em.createQuery("select funcionario.codigo from Funcionario funcionario where funcionario.login = :login and funcionario.senha = :senha");
         query.setParameter("login", funcionario.getLogin());
         query.setParameter("senha", funcionario.getSenha());
-        return query.getResultList().size() > 0;
+        if (query.getResultList().size() == 1) {
+            return (int) query.getSingleResult();
+        }
+        else {
+            return 0;
+        }
     }
     
 }

@@ -63,4 +63,9 @@ public class Marca extends Model implements Comparator<Marca> {
         return marca1.getCodigo() - marca2.getCodigo();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return this.compare(this, (Marca) obj) == 0;
+    }
+    
 }

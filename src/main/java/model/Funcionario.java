@@ -1,8 +1,12 @@
 package model;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import util.DateUtils;
+import util.NumberUtils;
 
 /**
  * Modelo de funcionário
@@ -73,6 +77,50 @@ public class Funcionario extends Pessoa {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+    
+    public String getDataAdmissaoConsulta() {
+        return DateUtils.dateToString(this.getDataAdmissao());
+    }
+    
+    public String getGerenteConsulta() {
+        String retorno = "Não";
+        if (this.isGerente()) {
+            retorno = "Sim";
+        }
+        return retorno;
+    }
+    
+    public String getSalarioConsulta() {
+        return NumberUtils.formataValor(this.getSalario(), 2, true);
+    }
+
+    @Override
+    public List<String> getCamposIgnorar() {
+        List<String> campos = super.getCamposIgnorar();
+        campos.add("dataAdmissao");
+        campos.add("gerente");
+        campos.add("salario");
+        campos.add("senha");
+        return campos;
+    }
+
+    @Override
+    public List<String> getCamposAdicionar() {
+        List<String> campos = super.getCamposAdicionar();
+        campos.add("dataAdmissaoConsulta");
+        campos.add("gerenteConsulta");
+        campos.add("salarioConsulta");
+        return campos;
+    }
+
+    @Override
+    public Map<String, String> getTitulosColunas() {
+        Map<String, String> titulosColunas = super.getTitulosColunas();
+        titulosColunas.put("dataAdmissaoConsulta", "Data de Admissão");
+        titulosColunas.put("gerenteConsulta",      "Gerente?");
+        titulosColunas.put("salarioConsulta",      "Salário");
+        return titulosColunas;
     }
     
 }

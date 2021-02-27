@@ -98,7 +98,9 @@ abstract public class View extends JFrame {
                 ((JRadioButton) c).setSelected(false);
             }
             else if (c instanceof JComboBox) {
-                ((JComboBox) c).removeAllItems();
+                if (((JComboBox) c).getItemCount() > 0) {
+                    ((JComboBox) c).setSelectedIndex(0);
+                }
             }
             else if (c instanceof Container) {
                 this.clearAll((Container) c);

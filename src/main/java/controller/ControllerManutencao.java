@@ -20,6 +20,10 @@ abstract public class ControllerManutencao extends Controller {
     @Override
     public void montaTela() {
         super.montaTela();
+        this.beanDadosTela();
+    }
+    
+    protected void beanDadosTela() {
         if (this.getModel().isChavePreenchida()) {
             this.getView().setModel(this.getModel());
             this.getView().beanDados();

@@ -88,4 +88,9 @@ public class Modelo extends Model implements Comparator<Modelo> {
         return modelo1.getCodigo() - modelo2.getCodigo();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return this.compare(this, (Modelo) obj) == 0;
+    }
+    
 }

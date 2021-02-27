@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import util.NumberUtils;
+import util.StringUtils;
 
 /**
  * Modelo de um veículo vrum vrum
@@ -131,6 +133,14 @@ public class Veiculo extends Model implements ListagemMaqueada, ListagemAdiciona
         return situacoes.get(this.getSituacao());
     }
     
+    public String getPrecoConsulta() {
+        return NumberUtils.formataValor(this.getPreco(), 2, true);
+    }
+    
+    public String getQuilometragemConsulta() {
+        return StringUtils.lpad(NumberUtils.formataValor(this.getQuilometragem(), 0, true), 7);
+    }
+    
     @Override
     public boolean isChavePreenchida() {
         return this.getPlaca() != null;
@@ -144,10 +154,11 @@ public class Veiculo extends Model implements ListagemMaqueada, ListagemAdiciona
     @Override
     public Map<String, String> getTitulosColunas() {
         HashMap<String, String> titulosColunas = new HashMap<>();
-        titulosColunas.put("anoFabricacao",    "Ano de Fabricação");
-        titulosColunas.put("observacao",       "Observação");
-        titulosColunas.put("preco",            "Preço");
-        titulosColunas.put("situacaoConsulta", "Situação");
+        titulosColunas.put("anoFabricacao",         "Ano de Fabricação");
+        titulosColunas.put("observacao",            "Observação");
+        titulosColunas.put("situacaoConsulta",      "Situação");
+        titulosColunas.put("precoConsulta",         "Preço");
+        titulosColunas.put("quilometragemConsulta", "Quilometragem");
         return titulosColunas;
     }
 
@@ -155,6 +166,8 @@ public class Veiculo extends Model implements ListagemMaqueada, ListagemAdiciona
     public List<String> getCamposAdicionar() {
         ArrayList<String> campos = new ArrayList<>();
         campos.add("situacaoConsulta");
+        campos.add("precoConsulta");
+        campos.add("quilometragemConsulta");
         return campos;
     }
 
@@ -164,12 +177,19 @@ public class Veiculo extends Model implements ListagemMaqueada, ListagemAdiciona
         campos.add("SITUACAO_DISPONIVEL");
         campos.add("SITUACAO_VENDIDO");
         campos.add("situacao");
+        campos.add("preco");
+        campos.add("quilometragem");
         return campos;
     }
 
     @Override
     public int compare(Veiculo veiculo1, Veiculo veiculo2) {
         return veiculo1.getPlaca().compareTo(veiculo2.getPlaca());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.compare(this, (Veiculo) obj) == 0;
     }
 
 }

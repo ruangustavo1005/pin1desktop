@@ -38,6 +38,12 @@ public class NumberUtils {
             }
             retorno = parteInteira + retorno.substring(retorno.indexOf(","));
         }
+        if (decimais == 0) {
+            retorno = retorno.substring(0, retorno.indexOf(','));
+        }
+        else if (retorno.substring(retorno.indexOf(',') + 1).length() != decimais) {
+            retorno = retorno.substring(0, retorno.indexOf(',')).concat(StringUtils.rpad(retorno.substring(retorno.indexOf(',')), decimais + 1));
+        }
         return retorno;
     }
     

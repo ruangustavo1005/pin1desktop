@@ -1,16 +1,15 @@
 package controller;
 
 import dao.Dao;
-import model.Marca;
-import model.Modelo;
-import view.ViewManutencaoModelo;
+import model.Cliente;
+import view.ViewManutencaoCliente;
 
 /**
  * @author Ruan
  */
-public class ControllerManutencaoModelo extends ControllerManutencao {
+public class ControllerManutencaoCliente extends ControllerManutencao {
 
-    public ControllerManutencaoModelo(Controller caller) {
+    public ControllerManutencaoCliente(Controller caller) {
         super(caller);
     }
 
@@ -31,54 +30,46 @@ public class ControllerManutencaoModelo extends ControllerManutencao {
     }
 
     @Override
-    public void montaTela() {
-        super.montaTela();
-        this.addListenerAcoes();
+    public Cliente getInstanceModel() {
+        return new Cliente();
     }
 
     @Override
-    protected void beanDadosTela() {
-        (new Dao(Marca.class)).get().forEach((marca) -> {
-            this.getView().getComboBoxMarca().addItem((Marca) marca);
-        });
-        super.beanDadosTela();
-    }
-
-    @Override
-    public Modelo getInstanceModel() {
-        return new Modelo();
-    }
-
-    @Override
-    public ViewManutencaoModelo getInstanceView() {
-        return new ViewManutencaoModelo();
+    public ViewManutencaoCliente getInstanceView() {
+        return new ViewManutencaoCliente();
     }
 
     @Override
     public Dao getInstanceDao() {
-        return new Dao(Modelo.class);
+        return new Dao(Cliente.class);
     }
 
     @Override
-    public Modelo getModel() {
-        return (Modelo) super.getModel();
+    public ViewManutencaoCliente getView() {
+        return (ViewManutencaoCliente) super.getView();
     }
 
     @Override
-    public ViewManutencaoModelo getView() {
-        return (ViewManutencaoModelo) super.getView();
+    public Cliente getModel() {
+        return (Cliente) super.getModel();
+    }
+    
+    @Override
+    public void montaTela() {
+        super.montaTela();
+        this.addListenerAcoes();
     }
     
     private void addListenerAcoes() {
-        this.addListenerConfirmar();
+        this.addListenerInserir();
         this.addListenerLimpar();
         this.addListenerSair();
     }
     
-    private void addListenerConfirmar() {
+    private void addListenerInserir() {
         this.getView().getBotaoConfirmar().addActionListener((e) -> {
             if (this.processaDados()) {
-                this.getView().showMensagem("Sucesso na operação!");
+                this.getView().showMensagem("Sucesso na operacao!");
                 this.getView().dispose();
             }
             else {

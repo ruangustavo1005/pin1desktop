@@ -63,7 +63,7 @@ public class Dao<Type> {
             this.commit();
         }
         catch (Exception e) {
-            System.out.println(e.getStackTrace());
+            System.out.println(e.getMessage());
             retorno = false;
             if (em.getTransaction().isActive()) {
                 this.rollback();

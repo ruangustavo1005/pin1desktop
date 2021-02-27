@@ -40,8 +40,12 @@ public class TableModelPadrao<Type> extends AbstractTableModel {
     
     protected final void iniAtributos() {
         this.atributos = new ArrayList<>();
-        for (Field field : modelo.getClass().getDeclaredFields()) {
-            this.atributos.add(field.getName());
+        Class classAtual = modelo.getClass();
+        while (!classAtual.isInstance(new Object())) {
+            for (Field field : classAtual.getDeclaredFields()) {
+                this.atributos.add(field.getName());
+            }
+            classAtual = classAtual.getSuperclass();
         }
         if (modelo instanceof ListagemParcial) {
             ((ListagemParcial) modelo).getCamposIgnorar().forEach(atributo -> {

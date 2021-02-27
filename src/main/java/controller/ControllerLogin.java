@@ -1,6 +1,5 @@
 package controller;
 
-import dao.Dao;
 import dao.DaoLogin;
 import model.Funcionario;
 import view.ViewLogin;
@@ -38,8 +37,10 @@ public class ControllerLogin extends ControllerManutencao {
         boolean retorno = false;
         this.setModel(this.getView().getModelFromDadosTela());
         if (this.getModel().getLogin() != null && this.getModel().getSenha() != null) {
-            retorno = this.getDao().dadosLoginCorretos(this.getModel());
+            int codigo = this.getDao().dadosLoginCorretos(this.getModel());
+            retorno = codigo != 0;
             if (retorno) {
+                this.setModel(this.getDao().get(codigo));
                 ControllerLogin.setUsuarioLogado(this.getModel());
             }
         }
