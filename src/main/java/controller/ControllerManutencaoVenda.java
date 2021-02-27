@@ -4,7 +4,6 @@ import dao.Dao;
 import dao.DaoMovimento;
 import model.Cliente;
 import model.Funcionario;
-import model.Movimento;
 import model.Veiculo;
 import model.Venda;
 import util.NumberUtils;
@@ -26,6 +25,10 @@ public class ControllerManutencaoVenda extends ControllerManutencao {
         boolean retorno = (new DaoMovimento()).add(this.getModel().getMovimento());
         if (retorno) {
             retorno = this.getDao().add(this.getModel());
+            if (retorno) {
+                this.getModel().getVeiculo().setSituacao(Veiculo.SITUACAO_VENDIDO);
+                retorno = (new Dao<>(Veiculo.class)).update(this.getModel().getVeiculo());
+            }
         }
         return retorno;
     }

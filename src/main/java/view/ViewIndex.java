@@ -29,6 +29,7 @@ public class ViewIndex extends ViewConsulta {
         botaoLogout = new javax.swing.JButton();
         botaoCancelarAgendamento = new javax.swing.JButton();
         botaoEfetuarAgendamento = new javax.swing.JButton();
+        botaoConfirmarAgendamento = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuMarcas = new javax.swing.JMenuItem();
@@ -54,6 +55,8 @@ public class ViewIndex extends ViewConsulta {
         botaoCancelarAgendamento.setText("Cancelar Agendamento");
 
         botaoEfetuarAgendamento.setText("Agendamento Já Efetuado");
+
+        botaoConfirmarAgendamento.setText("Confirmar Agendamento");
 
         jMenu1.setText("Gerenciamento");
 
@@ -98,6 +101,8 @@ public class ViewIndex extends ViewConsulta {
                         .addComponent(botaoLogout))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botaoConfirmarAgendamento)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoEfetuarAgendamento)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelarAgendamento)))
@@ -109,7 +114,8 @@ public class ViewIndex extends ViewConsulta {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoCancelarAgendamento)
-                    .addComponent(botaoEfetuarAgendamento))
+                    .addComponent(botaoEfetuarAgendamento)
+                    .addComponent(botaoConfirmarAgendamento))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -168,6 +174,10 @@ public class ViewIndex extends ViewConsulta {
     public JButton getBotaoEfetuarAgendamento() {
         return botaoEfetuarAgendamento;
     }
+
+    public JButton getBotaoConfirmarAgendamento() {
+        return botaoConfirmarAgendamento;
+    }
     
     @Override
     public JTable getTable() {
@@ -179,6 +189,7 @@ public class ViewIndex extends ViewConsulta {
         ArrayList<JButton> acoes = new ArrayList<>();
         acoes.add(botaoEfetuarAgendamento);
         acoes.add(botaoCancelarAgendamento);
+        acoes.add(botaoConfirmarAgendamento);
         return acoes;
     }
 
@@ -188,6 +199,7 @@ public class ViewIndex extends ViewConsulta {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelarAgendamento;
+    private javax.swing.JButton botaoConfirmarAgendamento;
     private javax.swing.JButton botaoEfetuarAgendamento;
     private javax.swing.JButton botaoLogout;
     private javax.swing.JLabel jLabel2;

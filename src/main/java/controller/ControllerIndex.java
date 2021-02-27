@@ -74,6 +74,7 @@ public class ControllerIndex extends ControllerConsulta {
         this.addListenerBotaoLogout();
         this.addListenerBotaoEfetuarAgendamento();
         this.addListenerBotaoCancelarAgendamento();
+        this.addListenerBotaoConfirmarAgendamento();
     }
     
     private void addListenerMenuConsultarMarcas() {
@@ -164,7 +165,24 @@ public class ControllerIndex extends ControllerConsulta {
                     this.atualizaConsulta(modelSelecionado);
                 }
                 else {
-                    this.getView().showMensagem("Houve um erro ao cancelado o Agendamento.");
+                    this.getView().showMensagem("Houve um erro ao cancelar o Agendamento.");
+                }
+            }
+        });
+    }
+    
+    private void addListenerBotaoConfirmarAgendamento() {
+        this.getView().getBotaoConfirmarAgendamento().addActionListener((e) -> {
+            if (this.getView().showDialog("Deseja confirmar o Agendamento selecionado?", "Atenção", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                Agendamento modelSelecionado = (Agendamento) this.getView().getTableModel().get(this.getView().getTable().getSelectedRow());
+                modelSelecionado.setSituacao(Agendamento.SITUACAO_CONFIRMADO);
+                
+                if (this.getDao().update(modelSelecionado)) {
+                    this.getView().showMensagem("Agendamento confirmado com sucesso!");
+                    this.atualizaConsulta(modelSelecionado);
+                }
+                else {
+                    this.getView().showMensagem("Houve um erro ao confirmar o Agendamento.");
                 }
             }
         });

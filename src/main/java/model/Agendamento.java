@@ -4,6 +4,7 @@ import interfaces.ListagemAdicional;
 import interfaces.ListagemMaqueada;
 import interfaces.ListagemParcial;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,12 +25,13 @@ import util.DateUtils;
  */
 @Entity
 @Table(name = "tbagendamento")
-public class Agendamento extends Model implements ListagemAdicional, ListagemMaqueada, ListagemParcial {
+public class Agendamento extends Model implements ListagemAdicional, ListagemMaqueada, ListagemParcial, Comparator<Agendamento> {
     
-    static public int SITUACAO_ABERTO    = 1;
-    static public int SITUACAO_EFETUADO  = 2;
-    static public int SITUACAO_ATRASADO  = 3;
-    static public int SITUACAO_CANCELADO = 4;
+    static public int SITUACAO_ABERTO     = 1;
+    static public int SITUACAO_CONFIRMADO = 2;
+    static public int SITUACAO_EFETUADO   = 3;
+    static public int SITUACAO_ATRASADO   = 4;
+    static public int SITUACAO_CANCELADO  = 5;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -116,6 +118,10 @@ public class Agendamento extends Model implements ListagemAdicional, ListagemMaq
         return this.getSituacao() == SITUACAO_ABERTO;
     }
     
+    public boolean isSituacaoConfirmado() {
+        return this.getSituacao() == SITUACAO_CONFIRMADO;
+    }
+    
     public boolean isSituacaoEfetuado() {
         return this.getSituacao() == SITUACAO_EFETUADO;
     }
@@ -130,10 +136,11 @@ public class Agendamento extends Model implements ListagemAdicional, ListagemMaq
     
     public String getSituacaoConsulta() {
         HashMap<Integer, String> situacoes = new HashMap<>();
-        situacoes.put(SITUACAO_ABERTO,    "Aberto");
-        situacoes.put(SITUACAO_EFETUADO,  "Efetuado");
-        situacoes.put(SITUACAO_ATRASADO,  "Atrasado");
-        situacoes.put(SITUACAO_CANCELADO, "Cancelado");
+        situacoes.put(SITUACAO_ABERTO,     "Aberto");
+        situacoes.put(SITUACAO_CONFIRMADO, "Confirmado");
+        situacoes.put(SITUACAO_EFETUADO,   "Efetuado");
+        situacoes.put(SITUACAO_ATRASADO,   "Atrasado");
+        situacoes.put(SITUACAO_CANCELADO,  "Cancelado");
         return situacoes.get(this.getSituacao());
     }
     
@@ -160,6 +167,7 @@ public class Agendamento extends Model implements ListagemAdicional, ListagemMaq
     public List<String> getCamposIgnorar() {
         List<String> campos = new ArrayList<>();
         campos.add("SITUACAO_ABERTO");
+        campos.add("SITUACAO_CONFIRMADO");
         campos.add("SITUACAO_EFETUADO");
         campos.add("SITUACAO_ATRASADO");
         campos.add("SITUACAO_CANCELADO");
@@ -174,6 +182,30 @@ public class Agendamento extends Model implements ListagemAdicional, ListagemMaq
         campos.add("dataHoraConsulta");
         campos.add("situacaoConsulta");
         return campos;
+    }
+
+    @Override
+    public int compare(Agendamento agendamento1, Agendamento agendamento2) {
+        if (agendamento1.isSituacaoAberto() || agendamento1.isSituacaoConfirmado()) {
+            if (agendamento2.isSituacaoAberto() || agendamento2.isSituacaoConfirmado()) {
+//              Se os dois estiverem abertos, deve vir primeiro o que tiver a menor data
+                return agendamento1.getDataHora().compareTo(agendamento2.getDataHora());
+            }
+            else {
+//              Se o agendamento 2 não estiver aberto e o agendamento 1 estiver aberto, o agendamento 1 vem primeiro
+                return -1;
+            }
+        }
+        else {
+            if (agendamento2.isSituacaoAberto() || agendamento2.isSituacaoConfirmado()) {
+//              Se o agendamento 1 não estiver aberto e o agendamento 2 estiver aberto, o agendamento 2 vem primeiro
+                return 1;
+            }
+            else {
+//              Se os dois não estiverem abertos, deve vir primeiro o que tiver a maior data
+                return agendamento2.getDataHora().compareTo(agendamento1.getDataHora());
+            }
+        }
     }
     
 }
