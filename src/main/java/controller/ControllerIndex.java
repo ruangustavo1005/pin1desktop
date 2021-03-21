@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-import dao.Dao;
+import dao.DaoAgendamento;
+import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import model.Agendamento;
+import util.DateUtils;
 import view.ViewIndex;
 
 /**
@@ -31,10 +29,15 @@ public class ControllerIndex extends ControllerConsulta {
     }
 
     @Override
-    public Dao getInstanceDao() {
-        return new Dao(Agendamento.class);
+    public DaoAgendamento getInstanceDao() {
+        return new DaoAgendamento();
     }
 
+    @Override
+    public DaoAgendamento getDao() {
+        return (DaoAgendamento) super.getDao();
+    }
+    
     @Override
     public ViewIndex getView() {
         return (ViewIndex) super.getView();
@@ -42,7 +45,17 @@ public class ControllerIndex extends ControllerConsulta {
 
     @Override
     public boolean processaDados() {
+        this.atrasaAgendamentosAtrasados();
         return super.processaDados();
+    }
+    
+    private void atrasaAgendamentosAtrasados() {
+        ArrayList<Agendamento> agendamentosAtrasados = this.getDao().buscaAgendamentosAtrasados();
+        
+        agendamentosAtrasados.forEach((agendamento) -> {
+            agendamento.setSituacao(Agendamento.SITUACAO_ATRASADO);
+            this.getDao().update(agendamento);
+        });
     }
     
     @Override
@@ -53,14 +66,52 @@ public class ControllerIndex extends ControllerConsulta {
     }
 
     @Override
-    protected void onSelectRegistroConsulta() {
-        int index = this.getView().getTable().getSelectedRow();
-        if (index > -1 && ((Agendamento)this.getView().getTableModel().get(index)).isSituacaoAberto()) {
-            super.onSelectRegistroConsulta();
+    protected void setEnabledAcoesGrid(boolean enabled) {
+        super.setEnabledAcoesGrid(enabled);
+        
+        if (enabled) {
+            Agendamento agendamento = (Agendamento) this.getView().getTableModel().get(this.getView().getTable().getSelectedRow());
+            JButton botaoCancelarAgendamento  = this.getView().getBotaoCancelarAgendamento();
+            JButton botaoEfetuarAgendamento   = this.getView().getBotaoEfetuarAgendamento();
+            JButton botaoConfirmarAgendamento = this.getView().getBotaoConfirmarAgendamento();
+            
+            if (agendamento.isSituacaoAberto()) {
+                botaoCancelarAgendamento.setEnabled(true);
+                botaoEfetuarAgendamento.setEnabled(true);
+                botaoConfirmarAgendamento.setEnabled(true);
+            }
+            else if (agendamento.isSituacaoAtrasado()) {
+                botaoCancelarAgendamento.setEnabled(true);
+                botaoEfetuarAgendamento.setEnabled(true);
+                botaoConfirmarAgendamento.setEnabled(false);
+            }
+            else if (agendamento.isSituacaoCancelado()) {
+                botaoCancelarAgendamento.setEnabled(false);
+                botaoEfetuarAgendamento.setEnabled(false);
+                botaoConfirmarAgendamento.setEnabled(false);
+            }
+            else if (agendamento.isSituacaoConfirmado()) {
+                botaoCancelarAgendamento.setEnabled(true);
+                botaoEfetuarAgendamento.setEnabled(true);
+                botaoConfirmarAgendamento.setEnabled(false);
+            }
+            else if (agendamento.isSituacaoEfetuado()) {
+                botaoCancelarAgendamento.setEnabled(false);
+                botaoEfetuarAgendamento.setEnabled(false);
+                botaoConfirmarAgendamento.setEnabled(false);
+            }
         }
-        else {
-            this.setEnabledAcoesGrid(false);
-        }
+    }
+    
+    private boolean enviaEmailConfirmacaoAgendamento(Agendamento agendamento) {
+        ControllerEmail controllerEmail = new ControllerEmail(this);
+        controllerEmail.setDestinatarios(agendamento.getCliente().getEmail());
+        controllerEmail.setTitulo("Olá, seu agendamento foi confirmado!");
+        controllerEmail.setConteudo("Seu agendamento para o dia/hora " + DateUtils.dateHourToString(agendamento.getDataHora()) + " para o veículo " + agendamento.getVeiculo() + " foi confirmado por um de nossos gerentes!\n\n"
+                                  + "Compareça à concessionária na data e hora para ser atendido(a)!\n\n"
+                                  + "Agradeçemos à preferência!");
+        
+        return controllerEmail.processaDados();
     }
     
     private void addListenerAcoes() {
@@ -177,7 +228,8 @@ public class ControllerIndex extends ControllerConsulta {
                 Agendamento modelSelecionado = (Agendamento) this.getView().getTableModel().get(this.getView().getTable().getSelectedRow());
                 modelSelecionado.setSituacao(Agendamento.SITUACAO_CONFIRMADO);
                 
-                if (this.getDao().update(modelSelecionado)) {
+                if (this.getDao().update(modelSelecionado)
+                 && this.enviaEmailConfirmacaoAgendamento(modelSelecionado)) {
                     this.getView().showMensagem("Agendamento confirmado com sucesso!");
                     this.atualizaConsulta(modelSelecionado);
                 }

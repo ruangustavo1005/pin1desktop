@@ -105,7 +105,9 @@ public class Dao<Type> {
     }
 
     protected final void commit() {
-        em.getTransaction().commit();
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().commit();
+        }
     }
 
     protected final void rollback() {

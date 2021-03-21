@@ -1,6 +1,5 @@
 package controller;
 
-import javax.swing.event.ListSelectionListener;
 import model.Model;
 import view.ViewConsulta;
 

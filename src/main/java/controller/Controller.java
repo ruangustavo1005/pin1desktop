@@ -17,9 +17,12 @@ abstract public class Controller {
 
     public Controller(Controller caller) {
         this.caller = caller;
-        this.model  = this.getInstanceModel();
-        this.view   = this.getInstanceView();
-        this.dao    = this.getInstanceDao();
+        try {
+            this.model  = this.getInstanceModel();
+            this.view   = this.getInstanceView();
+            this.dao    = this.getInstanceDao();
+        }
+        catch (UnsupportedOperationException exception) {}
     }
 
     abstract public boolean processaDados();
