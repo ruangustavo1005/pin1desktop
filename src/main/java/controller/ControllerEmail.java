@@ -35,7 +35,7 @@ public class ControllerEmail extends Controller {
     private static final String EMAIL_GMAIL       = "concessionaria.pin@gmail.com";
     private static final String SENHA_EMAIL_GMAIL = "Aw9Uw!9fWp36";
     
-    private static final String EMAIL_HOTMAIL       = "concessionaria.pin@hotmail.com";
+    private static final String EMAIL_HOTMAIL       = "concessionariapin@hotmail.com";
     private static final String SENHA_EMAIL_HOTMAIL = "Aw9Uw!9fWp36";
 
     private String destinatarios;
